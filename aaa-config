@@ -1,0 +1,29 @@
+
+aaa new-model
+tacacs server isebox3
+ address ipv4 172.28.89.21
+ key cisco123
+tacacs server isebox4
+ address ipv4 172.28.89.22
+ key cisco123
+aaa group server tacacs+ ISE_TACACS
+ server name isebox3
+ server name isebox4
+aaa authentication login default group ISE_TACACS local
+aaa authentication login CONSOLE local
+aaa authorization exec default group ISE_TACACS local if-authenticated
+aaa authorization exec CONSOLE local
+aaa authorization config-commands
+aaa accounting exec default start-stop group ISE_TACACS
+aaa accounting commands 1 default start-stop group ISE_TACACS
+aaa accounting commands 15 default start-stop group ISE_TACACS
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+line vty 0 4
+ logging synchronous
+ login authentication ISE_TACACS
+
+aaa authorization commands 1 default group ISE_TACACS local if-authenticated
+aaa authorization commands 15 default group ISE_TACACS local if-authenticated
+
