@@ -1,0 +1,7 @@
+.venv
+*test
+*remove
+deploy-config.py
+logs
+*.log
+*-test.py
